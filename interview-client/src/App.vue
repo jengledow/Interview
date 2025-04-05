@@ -4,8 +4,7 @@
 
 <template>
   <header>
-    <a href="/">Home</a>
-    <a href="/not-home">Not home</a>
+    <a href="/"></a>
   </header>
   <RouterView />
 </template>
