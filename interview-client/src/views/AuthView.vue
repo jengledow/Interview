@@ -7,7 +7,7 @@
 	import Password from 'primevue/password'
 	import { reactive, ref } from 'vue';
 
-	const login = ref(true);
+	const login = ref(false);
 	const loginValues = reactive({
 		email: '',
 		password: '',
@@ -23,16 +23,39 @@
 	}
 	
 	async function submitLogin(e){
+		let loginData = {
+			email: e.values.email,
+			password: e.values.password 
+		} 
+		
 		let res = await fetch('http://localhost:5000/login', {
 			method: 'POST',
-			body: JSON.stringify(e.values)
-		})
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			}),
+			body: JSON.stringify(loginData)
+		});
 
-		console.log(res);
+		res = await res.json();
+		console.log(res)
 	}
 
-	function submitRegister(e){
-		console.log(e);
+	async function submitRegister(e){
+		let registerData = {
+			email: e.values.email,
+			password: e.values.password 
+		} 
+		
+		let res = await fetch('http://localhost:5000/register', {
+			method: 'POST',
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			}),
+			body: JSON.stringify(registerData)
+		});
+
+		res = await res.json();
+		console.log(res)
 	}
 </script>
 
@@ -47,7 +70,7 @@
 					<label for="email">Email</label>
 				</IftaLabel>
 				<IftaLabel class="my-5">
-					<Password id="password" name="password" :feedback="true" fluid />
+					<Password id="password" name="password" :feedback="false" fluid />
 					<label for="password">Password</label>
 				</IftaLabel>
 
@@ -65,11 +88,11 @@
 					<label for="email">Email</label>
 				</IftaLabel>
 				<IftaLabel class="my-5">
-					<Password id="password" name="password" :feedback="true" fluid />
+					<Password id="password" name="password" fluid />
 					<label for="password">Password</label>
 				</IftaLabel>
 				<IftaLabel class="my-5">
-					<Password id="confirm-password" name="confirm-password" fluid />
+					<Password id="confirm-password" name="confirm-password" :feedback="false" fluid />
 					<label for="confirm-password">Confirm Password</label>
 				</IftaLabel>
 
